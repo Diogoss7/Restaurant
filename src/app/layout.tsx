@@ -10,7 +10,7 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "FSW Donalds",
-  description: "Bora finaasdasdlizar esse projeto lindo!",
+  description: "Bora finaasdasdlizaasdar esse projeto lindo!",
 };
 
 export default function RootLayout({
