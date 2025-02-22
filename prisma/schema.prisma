@@ -16,7 +16,7 @@ datasource db {
 model Restaurant {
   id             String         @id @default(uuid())
   name           String
-  slug           String
+  slug           String         @unique
   description    String
   avatarImageUrl String
   coverImageUrl  String
@@ -57,7 +57,7 @@ model Order {
   id                Int              @id @default(autoincrement())
   total             Float
   status            OrderStatus
-  consumptionMethod ConsumtionMethod
+  consumptionMethod ConsumptionMethod
   orderProduct      OrderProduct[]
   restaurant        Restaurant       @relation(fields: [restaurantId], references: [id], onDelete: Cascade )
   restaurantId      String
@@ -83,7 +83,7 @@ enum OrderStatus {
   FINISHED
 }
 
-enum ConsumtionMethod {
-  TAKEWAY
+enum ConsumptionMethod {
+  TAKEAWAY
   DINE_IN
 }
