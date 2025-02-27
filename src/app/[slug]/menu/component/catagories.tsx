@@ -2,11 +2,13 @@
 import { Prisma } from "@prisma/client";
 import { ClockIcon } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { formatCurrency } from "@/helpers/formatCurrency";
 
+import { CartContext } from "../context/cart";
 import Products from "./products";
 
 interface RestaurantCategoriesProps {
@@ -27,6 +29,8 @@ const RestaurantCategories = ({ restaurant }: RestaurantCategoriesProps) => {
 const handleCategoryClick = (category:MenuCategoriesWithProducts) =>{
     setSelectedCategory(category)
 }
+const{products}= useContext(CartContext)
+
 const getCategoryButtonVariant =(category:MenuCategoriesWithProducts)=>{
          return selectedCategory.id === category.id ? "default":"secondary"
 }
@@ -63,6 +67,15 @@ const getCategoryButtonVariant =(category:MenuCategoriesWithProducts)=>{
             <h3 className="pl-4 text-lg font-semibold py-3">{selectedCategory.name}</h3>
             <Products products={selectedCategory.products}
             />
+            {products.length > 0 && ( 
+                <div className="fixed bottom-0 left-0 right-0 fle w-full items-center justify-between border-t bg-white">
+                 <div className="">
+                    <p className="text-xs text-muted-foreground">Total dos Pedidos</p>
+                    <p className="text-sm font-semibold">{formatCurrency(products.length)}</p>
+                    <span> / {products.length}</span>
+                 </div>
+                </div>
+            )}
         </div>
     );
 };
