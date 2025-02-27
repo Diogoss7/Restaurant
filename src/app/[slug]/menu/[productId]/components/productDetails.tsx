@@ -22,7 +22,7 @@ interface ProductDetailsProps{
 }
 
 const ProductDetails = ({product}:ProductDetailsProps) => {
- const{toggleCart} = useContext(CartContext);
+ const{toggleCart,addProduct} = useContext(CartContext);
  const [quantity, setQuantity]=useState(1)
  const handleDecreaseQuantity = () =>{
     setQuantity((prev) => {
@@ -36,11 +36,15 @@ const ProductDetails = ({product}:ProductDetailsProps) => {
     setQuantity((prev) => prev + 1)
  }
  const handleAddToCart=()=>{
+    addProduct({
+     ...product,
+    quantity,
+    })
     toggleCart();
  }
     return (  
      <>
-       <div className="relative z-50 mt-[-1.5rem] flex flex-auto flex-col overflow-hidden rounded-t-3xl p-5">
+       <div className="relative z-50 mt-[-1.5rem] flex flex-auto flex-col overflow rounded-t-3xl p-5">
             <div className="flex-auto overflow-hidden" >
            {/* Restaurant */}
             <div className="flex items-center gap-1.5">
