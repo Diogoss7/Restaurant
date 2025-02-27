@@ -1,13 +1,12 @@
-import { Order } from "@prisma/client";
 
 const OrderItem = () => {
-    interface OrderItemProps{
-        order:Order
-    }
+    // interface OrderItemProps{
+    //     order:Order
+    // }
     return ( 
 
     
-
+<h1>asd</h1>
 
      );
 }
