@@ -21,14 +21,14 @@ const CartSheet = () => {
   const { isOpen, toggleCart, products, total } = useContext(CartContext);
   return (
     <Sheet open={isOpen} onOpenChange={toggleCart}>
-      <SheetContent className="w-[80%]">
+      <SheetContent className="w-[85%]">
         <SheetHeader>
           <SheetTitle className="text-left">Sacola</SheetTitle>
         </SheetHeader>
-        <div className="flex h-full flex-col py-5">
+        <div className="flex h-full  flex-col py-5">
           <div className="flex-auto">
             {products.map((product) => (
-              <CartProductItem key={product.id} product={product} />
+              <CartProductItem key={product.id} product={product}/>
             ))}
           </div>
           <Card className="mb-6">

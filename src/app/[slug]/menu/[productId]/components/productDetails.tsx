@@ -47,7 +47,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
   return (
     <>
       {/* Container principal ocupando toda a tela */}
-      <div className="h-screen flex flex-col">
+      <div className="h-[68vh] flex flex-col">
         {/* Conteúdo que pode rolar */}
         <div className="flex-1 overflow-auto p-6">
           {/* RESTAURANTE */}
@@ -87,6 +87,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
             </div>
 
             {/* INGREDIENTES */}
+            
             <div className="mt-6 space-y-3">
               <div className="flex items-center gap-1">
                 <ChefHatIcon size={18} />
