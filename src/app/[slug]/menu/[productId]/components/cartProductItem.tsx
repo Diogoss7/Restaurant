@@ -18,7 +18,7 @@ const CartProductItem = ({ product }: CartItemProps) => {
   return (
     <div className="flex items-center justify-between p-3">
       {/* ESQUERDA */}
-      <div className="flex items-center gap-7">
+      <div className="flex items-center gap-3">
         <div className="relative h-20 w-20 rounded-xl bg-gray-100">
           <Image src={product.imageUrl} alt={product.name} fill />
         </div>
@@ -50,6 +50,7 @@ const CartProductItem = ({ product }: CartItemProps) => {
         </div>
       </div>
       {/* BOTÃO DE DELETAR */}
+      <div className="">
       <Button
         className="h-7 w-7 rounded-lg"
         variant="outline"
@@ -57,6 +58,7 @@ const CartProductItem = ({ product }: CartItemProps) => {
       >
         <TrashIcon />
       </Button>
+      </div>
     </div>
   );
 };
