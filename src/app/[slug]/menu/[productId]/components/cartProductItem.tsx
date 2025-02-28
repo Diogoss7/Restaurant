@@ -50,15 +50,13 @@ const CartProductItem = ({ product }: CartItemProps) => {
         </div>
       </div>
       {/* BOTÃO DE DELETAR */}
-      <div className="">
       <Button
-        className="h-7 w-7 rounded-lg"
+        className="h-7 w-7 rounded-lg p-0"
         variant="outline"
         onClick={() => removeProduct(product.id)}
       >
         <TrashIcon />
       </Button>
-      </div>
     </div>
   );
 };

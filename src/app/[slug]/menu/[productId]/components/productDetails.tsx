@@ -47,7 +47,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
   return (
     <>
       {/* Container principal ocupando toda a tela */}
-      <div className="h-[68vh] flex flex-col">
+      <div className="h-[66vh] flex flex-col">
         {/* Conteúdo que pode rolar */}
         <div className="flex-1 overflow-auto p-6">
           {/* RESTAURANTE */}
@@ -61,10 +61,8 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
             />
             <p className="text-xs text-muted-foreground">{product.restaurant.name}</p>
           </div>
-
           {/* NOME DO PRODUTO */}
           <h2 className="mt-1 text-xl font-semibold">{product.name}</h2>
-
           {/* PREÇO E QUANTIDADE */}
           <div className="mt-3 flex items-center justify-between">
             <h3 className="text-xl font-semibold">{formatCurrency(product.price)}</h3>
@@ -78,17 +76,16 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
               </Button>
             </div>
           </div>
-
           {/* SOBRE */}
           <ScrollArea className="mt-6">
             <div className="space-y-3">
               <h4 className="font-semibold">Sobre</h4>
               <p className="text-sm text-muted-foreground">{product.description}</p>
             </div>
-
             {/* INGREDIENTES */}
-            
             <div className="mt-6 space-y-3">
+              {product.ingredients.length === 0 ? (<></>):(
+              <>
               <div className="flex items-center gap-1">
                 <ChefHatIcon size={18} />
                 <h4 className="font-semibold">Ingredientes</h4>
@@ -98,10 +95,10 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
                   <li key={ingredient}>{ingredient}</li>
                 ))}
               </ul>
+              </>)}
             </div>
           </ScrollArea>
         </div>
-
         {/* BOTÃO FIXO */}
         <div className="sticky bottom-0 left-0 right-0 bg-white p-4 shadow-lg border-t">
           <Button className="w-full rounded-full" onClick={handleAddToCart}>

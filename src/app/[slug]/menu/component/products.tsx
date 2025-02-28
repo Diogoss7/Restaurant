@@ -25,8 +25,8 @@ const Products = ({ products }: ProductsProps) => {
               {formatCurrency(product.price)}
             </p>
           </div>
-          <div className=""></div>
-
+          <div className="flex mt-0"></div>
+          
           <div className="relative min-h-[82px] min-w-[120px]">
             <Image
               src={product.imageUrl}
