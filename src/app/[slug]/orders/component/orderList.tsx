@@ -78,13 +78,13 @@ const OrderList = ({ orders }: OrderListProps) => {
                     {getStatusLabel(order.status)}
                   </div>
                   <div>
-                    <Button
+                    {/* <Button
                       className="h-7 w-7 rounded-lg p-0"
                       variant="outline"
                       onClick={() => removeOrder(order.id)}
                     >
                       <TrashIcon />
-                    </Button>
+                    </Button> */}
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
