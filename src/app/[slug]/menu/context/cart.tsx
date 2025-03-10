@@ -1,6 +1,6 @@
 "use client";
 
-import { Product } from "@prisma/client";
+import { Order, Product } from "@prisma/client";
 import { createContext, ReactNode, useState } from "react";
 
 export interface CartProduct
@@ -11,6 +11,7 @@ export interface CartProduct
 export interface ICartContext {
   isOpen: boolean;
   products: CartProduct[];
+  orders: Order[]
   total: number;
   totalQuantity: number;
   toggleCart: () => void;
@@ -18,6 +19,7 @@ export interface ICartContext {
   decreaseProductQuantity: (productId: string) => void;
   increaseProductQuantity: (productId: string) => void;
   removeProduct: (productId: string) => void;
+  removeOrder: (orderId: number) => void;
 }
 
 export const CartContext = createContext<ICartContext>({
@@ -25,15 +27,18 @@ export const CartContext = createContext<ICartContext>({
   total: 0,
   totalQuantity: 0,
   products: [],
+  orders: [],
   toggleCart: () => {},
   addProduct: () => {},
   decreaseProductQuantity: () => {},
   increaseProductQuantity: () => {},
   removeProduct: () => {},
+  removeOrder: () => {},
 });
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<CartProduct[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const total = products.reduce((acc, product) => {
@@ -92,16 +97,26 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       prevProducts.filter((prevProduct) => prevProduct.id !== productId),
     );
   };
+  const removeOrder = (orderId: number) => {
+    setOrders((prevOrders) => {
+      console.log("Antes da remoção:", prevOrders);
+      const updatedOrders = prevOrders.filter((order) => order.id !== orderId);
+      console.log("Depois da remoção:", updatedOrders);
+      return updatedOrders;
+    });
+  };
   return (
     <CartContext.Provider
       value={{
         isOpen,
+        orders,
         products,
         toggleCart,
         addProduct,
         decreaseProductQuantity,
         increaseProductQuantity,
         removeProduct,
+        removeOrder,
         total,
         totalQuantity,
       }}

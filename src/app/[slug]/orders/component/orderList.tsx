@@ -1,14 +1,17 @@
 "use client";
 
 import { OrderStatus, Prisma } from "@prisma/client";
-import { ChevronLeftIcon, ScrollTextIcon } from "lucide-react";
+import { ChevronLeftIcon, ScrollTextIcon, TrashIcon } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useContext } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { formatCurrency } from "@/helpers/formatCurrency";
+
+import { CartContext } from "../../menu/context/cart";
 
 interface OrderListProps {
   orders: Array<
@@ -41,6 +44,8 @@ const getStatusLabel = (status: OrderStatus) => {
 
 const OrderList = ({ orders }: OrderListProps) => {
   const router = useRouter();
+  const { removeOrder } =
+    useContext(CartContext);
   const handleBackClick = () => router.back();
   return (
     <div className="space-y-6 p-6">
@@ -65,10 +70,22 @@ const OrderList = ({ orders }: OrderListProps) => {
           {orders.map((order) => (
             <Card key={order.id}>
               <CardContent className="space-y-4 p-5">
-                <div
-                  className={`w-fit rounded-full px-2 py-1 text-xs font-semibold text-white ${([OrderStatus.FINISHED, OrderStatus.FINISHED] as OrderStatus[]).includes(order.status) ? "bg-green-500 text-white" : "bg-gray-200 text-gray-500"} `}
-                >
-                  {getStatusLabel(order.status)}
+                <div className="flex items-center justify-between">
+
+                  <div
+                    className={`w-fit rounded-full px-2 py-1 text-xs font-semibold text-white ${([OrderStatus.FINISHED, OrderStatus.FINISHED] as OrderStatus[]).includes(order.status) ? "bg-green-500 text-white" : "bg-gray-200 text-gray-500"} `}
+                  >
+                    {getStatusLabel(order.status)}
+                  </div>
+                  <div>
+                    <Button
+                      className="h-7 w-7 rounded-lg p-0"
+                      variant="outline"
+                      onClick={() => removeOrder(order.id)}
+                    >
+                      <TrashIcon />
+                    </Button>
+                  </div>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="relative h-5 w-5">
