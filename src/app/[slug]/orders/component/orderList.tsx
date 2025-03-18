@@ -1,19 +1,20 @@
 "use client";
 
 import { OrderStatus, Prisma } from "@prisma/client";
-import { ChevronLeftIcon, ScrollTextIcon } from "lucide-react";
+import { ChevronLeftIcon, ScrollTextIcon, TrashIcon } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-// import { useContext } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { formatCurrency } from "@/helpers/formatCurrency";
 
-// import { CartContext } from "../../menu/context/cart";
+import { deleteOrder } from "../../menu/actions/deletOrder";
 
 interface OrderListProps {
+  slug: string
   orders: Array<
     Prisma.OrderGetPayload<{
       include: {
@@ -37,16 +38,27 @@ const getStatusLabel = (status: OrderStatus) => {
   if (status === "FINISHED") return "Finalizado";
   if (status === "IN_PREPARATION") return "Em preparo";
   if (status === "PENDING") return "Pendente";
-  //   if (status === "PAYMENT_CONFIRMED") return "Pagamento confirmado";
-  //   if (status === "PAYMENT_FAILED") return "Pagamento falhou";
   return "";
 };
 
 const OrderList = ({ orders }: OrderListProps) => {
   const router = useRouter();
-  // const { removeOrder } =
-  //   useContext(CartContext);
+  // Cria um estado local para armazenar os pedidos e permitir sua manipulação
+  const [orderList, setOrderList] = useState(orders);
+
   const handleBackClick = () => router.back();
+
+  // Função que remove um pedido pelo ID
+  const handleRemoveOrder = async (orderId: number) => {
+    setOrderList((prevOrders)=>prevOrders.filter((order)=>order.id!==order.id));
+    try{
+      await deleteOrder(orderId)
+    }catch(error){
+      console.log("erro ao excluir o pedido",error)
+      setOrderList(orders)
+        }
+  };
+
   return (
     <div className="space-y-6 p-6">
       <Button
@@ -61,30 +73,33 @@ const OrderList = ({ orders }: OrderListProps) => {
         <ScrollTextIcon />
         <h2 className="text-lg font-semibold">Meus Pedidos</h2>
       </div>
-      {orders.length === 0 ? (
-        <>
-          <h1> Seu carrinho está vazio </h1>
-        </>
+      {orderList.length === 0 ? (
+        <h1>Seu carrinho está vazio</h1>
       ) : (
         <>
-          {orders.map((order) => (
+          {orderList.map((order) => (
             <Card key={order.id}>
               <CardContent className="space-y-4 p-5">
                 <div className="flex items-center justify-between">
-
                   <div
-                    className={`w-fit rounded-full px-2 py-1 text-xs font-semibold text-white ${([OrderStatus.FINISHED, OrderStatus.FINISHED] as OrderStatus[]).includes(order.status) ? "bg-green-500 text-white" : "bg-gray-200 text-gray-500"} `}
+                    className={`w-fit rounded-full px-2 py-1 text-xs font-semibold text-white ${
+                      ([OrderStatus.FINISHED, OrderStatus.FINISHED] as OrderStatus[]).includes(
+                        order.status
+                      )
+                        ? "bg-green-500 text-white"
+                        : "bg-gray-200 text-gray-500"
+                    }`}
                   >
                     {getStatusLabel(order.status)}
                   </div>
                   <div>
-                    {/* <Button
+                    <Button
                       className="h-7 w-7 rounded-lg p-0"
                       variant="outline"
-                      onClick={() => removeOrder(order.id)}
+                      onClick={() => handleRemoveOrder(Number(order.id))}
                     >
                       <TrashIcon />
-                    </Button> */}
+                    </Button>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
@@ -96,12 +111,17 @@ const OrderList = ({ orders }: OrderListProps) => {
                       fill
                     />
                   </div>
-                  <p className="text-sm font-semibold">{order.restaurant.name}</p>
+                  <p className="text-sm font-semibold">
+                    {order.restaurant.name}
+                  </p>
                 </div>
                 <Separator />
                 <div className="space-y-2">
                   {order.orderProducts.map((orderProduct) => (
-                    <div key={orderProduct.id} className="flex items-center gap-2">
+                    <div
+                      key={orderProduct.id}
+                      className="flex items-center gap-2"
+                    >
                       <div className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-400 text-xs font-semibold text-white">
                         {orderProduct.quantity}
                       </div>
@@ -110,14 +130,14 @@ const OrderList = ({ orders }: OrderListProps) => {
                   ))}
                 </div>
                 <Separator />
-                <p className="text-sm font-medium">{formatCurrency(order.total)}</p>
+                <p className="text-sm font-medium">
+                  {formatCurrency(order.total)}
+                </p>
               </CardContent>
             </Card>
           ))}
         </>
-
       )}
-
     </div>
   );
 };
