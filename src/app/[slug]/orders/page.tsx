@@ -40,7 +40,7 @@ const OrdersPage = async ({ searchParams }: OrdersPageProps) => {
     })
     return (
         <h1>
-            <OrderList orders={orders} />
+            <OrderList orders={orders} slug={""} />
         </h1>);
 }
 

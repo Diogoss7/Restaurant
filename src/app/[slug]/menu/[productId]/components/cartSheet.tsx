@@ -19,6 +19,12 @@ import FinishOrderDialog from "./finishOrderDialog";
 const CartSheet = () => {
   const [finishOrderDialogIsOpen, setFinishOrderDialogIsOpen] = useState(false);
   const { isOpen, toggleCart, products, total } = useContext(CartContext);
+  const isCartEmpity = products.length==0;
+
+  const handleOpenFinishOrderDialog = ()=>{
+   if(isCartEmpity)return;
+   setFinishOrderDialogIsOpen(true)
+  }
   return (
     <Sheet open={isOpen} onOpenChange={toggleCart}>
       <SheetContent className="w-[90%]">
@@ -41,7 +47,7 @@ const CartSheet = () => {
           </Card>
           <Button
             className="w-full rounded-full"
-            onClick={() => setFinishOrderDialogIsOpen(true)}
+            onClick={handleOpenFinishOrderDialog}
           >
             Finalizar pedido
           </Button>
