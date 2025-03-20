@@ -17,12 +17,13 @@ import FinishOrderDialog from "./finishOrderDialog";
 
 
 const CartSheet = () => {
+
   const [finishOrderDialogIsOpen, setFinishOrderDialogIsOpen] = useState(false);
+  
   const { isOpen, toggleCart, products, total } = useContext(CartContext);
-  const isCartEmpity = products.length==0;
 
   const handleOpenFinishOrderDialog = ()=>{
-   if(isCartEmpity)return;
+
    setFinishOrderDialogIsOpen(true)
   }
   return (

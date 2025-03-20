@@ -1,6 +1,6 @@
 "use client";
 
-import { OrderStatus, Prisma } from "@prisma/client";
+import { Order, OrderStatus, Prisma } from "@prisma/client";
 import { ChevronLeftIcon, ScrollTextIcon, TrashIcon } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -43,20 +43,18 @@ const getStatusLabel = (status: OrderStatus) => {
 
 const OrderList = ({ orders }: OrderListProps) => {
   const router = useRouter();
-  // Cria um estado local para armazenar os pedidos e permitir sua manipulação
+
   const [orderList, setOrderList] = useState(orders);
 
   const handleBackClick = () => router.back();
-
-  // Função que remove um pedido pelo ID
-  const handleRemoveOrder = async (orderId: number) => {
-    setOrderList((prevOrders)=>prevOrders.filter((order)=>order.id!==order.id));
-    try{
-      await deleteOrder(orderId)
-    }catch(error){
-      console.log("erro ao excluir o pedido",error)
-      setOrderList(orders)
-        }
+  
+  const handleDeleteOrder = async (orderId: number) => {
+    try {
+      await deleteOrder(orderId);
+      setOrderList(orderList.filter(order => order.id !== orderId)); // Atualiza a lista removendo o pedido deletado
+    } catch (error) {
+      console.error("Erro ao deletar pedido:", error);
+    }
   };
 
   return (
@@ -96,7 +94,7 @@ const OrderList = ({ orders }: OrderListProps) => {
                     <Button
                       className="h-7 w-7 rounded-lg p-0"
                       variant="outline"
-                      onClick={() => handleRemoveOrder(Number(order.id))}
+                      onClick={() => handleDeleteOrder(Number(order.id))}
                     >
                       <TrashIcon />
                     </Button>
@@ -130,9 +128,11 @@ const OrderList = ({ orders }: OrderListProps) => {
                   ))}
                 </div>
                 <Separator />
-                <p className="text-sm font-medium">
-                  {formatCurrency(order.total)}
-                </p>
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-medium">
+                    {formatCurrency(order.total)}
+                  </p>
+                </div>
               </CardContent>
             </Card>
           ))}
