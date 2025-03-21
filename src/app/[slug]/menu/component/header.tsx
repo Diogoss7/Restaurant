@@ -29,7 +29,7 @@ const RestaurantHeader = ({ restaurant }: RestaurantHeaderProps) => {
         src="/restaurant.png"
         alt={restaurant.name}
         fill
-        className="object-cover"
+        className="object-contain"
       />
       <Button
         variant="secondary"

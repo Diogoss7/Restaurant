@@ -14,7 +14,7 @@ import { formatCurrency } from "@/helpers/formatCurrency";
 import { deleteOrder } from "../../menu/actions/deletOrder";
 
 interface OrderListProps {
-  slug: string
+  slug: string;
   orders: Array<
     Prisma.OrderGetPayload<{
       include: {
@@ -43,15 +43,14 @@ const getStatusLabel = (status: OrderStatus) => {
 
 const OrderList = ({ orders }: OrderListProps) => {
   const router = useRouter();
-
   const [orderList, setOrderList] = useState(orders);
 
   const handleBackClick = () => router.back();
-  
+
   const handleDeleteOrder = async (orderId: number) => {
     try {
       await deleteOrder(orderId);
-      setOrderList(orderList.filter(order => order.id !== orderId));
+      setOrderList(orderList.filter((order) => order.id !== orderId));
     } catch (error) {
       console.error("Erro ao deletar pedido:", error);
     }

@@ -1,4 +1,5 @@
 "use client";
+
 import { Prisma } from "@prisma/client";
 import { ChefHatIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import Image from "next/image";
@@ -46,9 +47,8 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
 
   return (
     <>
-      <div className="flex flex-col min-h-full 2xl:pl-20 2xl:pr-20">
+      <div className="flex flex-col min-h-full md:w-1/2 md:mx-auto 2xl:w-1/2 2xl:mx-auto">
         <div className="flex-1 overflow-auto p-10 sm:p-20 sm:pr-10 relative">
-          {/* Ajustado para que o botão passe sobre o conteúdo */}
           <div className="flex items-center gap-1.5 mb-4">
             <Image
               src={product.restaurant.avatarImageUrl}
@@ -64,11 +64,19 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
           <div className="mt-3 flex items-center justify-between">
             <h3 className="text-xl font-semibold">{formatCurrency(product.price)}</h3>
             <div className="flex items-center gap-3 text-center">
-              <Button variant="outline" className="h-8 w-8 rounded-xl" onClick={handleDecreaseQuantity}>
+              <Button
+                variant="outline"
+                className="h-8 w-8 rounded-xl"
+                onClick={handleDecreaseQuantity}
+              >
                 <ChevronLeftIcon />
               </Button>
               <p className="w-4">{quantity}</p>
-              <Button variant="destructive" className="h-8 w-8 rounded-xl" onClick={handleIncreaseQuantity}>
+              <Button
+                variant="destructive"
+                className="h-8 w-8 rounded-xl"
+                onClick={handleIncreaseQuantity}
+              >
                 <ChevronRightIcon />
               </Button>
             </div>
@@ -81,24 +89,27 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
             </div>
             {/* INGREDIENTES */}
             <div className="mt-6 space-y-3">
-              {product.ingredients.length === 0 ? (<></>):(
-              <>
-              <div className="flex items-center gap-1">
-                <ChefHatIcon size={18} />
-                <h4 className="font-semibold">Ingredientes</h4>
-              </div>
-              <ul className="list-disc px-5 text-sm text-muted-foreground">
-                {product.ingredients.map((ingredient) => (
-                  <li key={ingredient}>{ingredient}</li>
-                ))}
-              </ul>
-              </>)}
+              {product.ingredients.length === 0 ? (
+                <></>
+              ) : (
+                <>
+                  <div className="flex items-center gap-1">
+                    <ChefHatIcon size={18} />
+                    <h4 className="font-semibold">Ingredientes</h4>
+                  </div>
+                  <ul className="list-disc px-5 text-sm text-muted-foreground">
+                    {product.ingredients.map((ingredient) => (
+                      <li key={ingredient}>{ingredient}</li>
+                    ))}
+                  </ul>
+                </>
+              )}
             </div>
           </ScrollArea>
         </div>
         {/* BOTÃO FIXO */}
-        <div className="fixed bottom-0 left-0 right-0 pl-4 pr-4 pb-4 shadow-lg bg-background z-10">
-          <Button className="w-full rounded-full" onClick={handleAddToCart}>
+        <div className="fixed bottom-0 left-0 right-0 pl-4 pr-4 pb-4 shadow-lg bg-background z-10 flex justify-center">
+          <Button className="w-full rounded-full md:w-1/2" onClick={handleAddToCart}>
             Adicionar à sacola
           </Button>
         </div>
