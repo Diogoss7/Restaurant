@@ -15,7 +15,7 @@ const Products = ({ products }: ProductsProps) => {
   const searchParams = useSearchParams();
   const consumptionMethod = searchParams.get("consumptionMethod")
   return (
-    <div className="space-y-3 px-1.5">
+    <div className="space-y-3 sm:p-8 md:p-10 lg:p-12 xl:p-14 2xl:p-16">
       {products.map((product) => (
         <Link key={product.id} href={`/${slug}/menu/${product.id}?consumptionMethod=${consumptionMethod}`} className="flex items-center justify-between gap-10 py-3 border-b px-3">
           <div>

@@ -46,12 +46,10 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
 
   return (
     <>
-      {/* Container principal ocupando toda a tela */}
-      <div className="h-[66vh] flex flex-col">
-        {/* Conteúdo que pode rolar */}
-        <div className="flex-1 overflow-auto p-6">
-          {/* RESTAURANTE */}
-          <div className="flex items-center gap-1.5">
+      <div className="flex flex-col min-h-full 2xl:pl-20 2xl:pr-20">
+        <div className="flex-1 overflow-auto p-10 sm:p-20 sm:pr-10 relative">
+          {/* Ajustado para que o botão passe sobre o conteúdo */}
+          <div className="flex items-center gap-1.5 mb-4">
             <Image
               src={product.restaurant.avatarImageUrl}
               alt={product.restaurant.name}
@@ -61,7 +59,6 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
             />
             <p className="text-xs text-muted-foreground">{product.restaurant.name}</p>
           </div>
-          {/* NOME DO PRODUTO */}
           <h2 className="mt-1 text-xl font-semibold">{product.name}</h2>
           {/* PREÇO E QUANTIDADE */}
           <div className="mt-3 flex items-center justify-between">
@@ -100,7 +97,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
           </ScrollArea>
         </div>
         {/* BOTÃO FIXO */}
-        <div className="sticky bottom-0 left-0 right-0 bg-white p-4 shadow-lg border-t">
+        <div className="fixed bottom-0 left-0 right-0 pl-4 pr-4 pb-4 shadow-lg bg-background z-10">
           <Button className="w-full rounded-full" onClick={handleAddToCart}>
             Adicionar à sacola
           </Button>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Order, OrderStatus, Prisma } from "@prisma/client";
+import { OrderStatus, Prisma } from "@prisma/client";
 import { ChevronLeftIcon, ScrollTextIcon, TrashIcon } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -51,14 +51,14 @@ const OrderList = ({ orders }: OrderListProps) => {
   const handleDeleteOrder = async (orderId: number) => {
     try {
       await deleteOrder(orderId);
-      setOrderList(orderList.filter(order => order.id !== orderId)); // Atualiza a lista removendo o pedido deletado
+      setOrderList(orderList.filter(order => order.id !== orderId));
     } catch (error) {
       console.error("Erro ao deletar pedido:", error);
     }
   };
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-6 p-6 sm:p-8 md:p-10 lg:p-12 xl:p-14 2xl:p-16">
       <Button
         size="icon"
         variant="secondary"
