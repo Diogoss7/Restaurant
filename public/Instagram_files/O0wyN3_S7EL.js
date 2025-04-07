@@ -1,0 +1,3 @@
+;/*FB_PKG_DELIM*/
+
+__d("LSUpsertCTMAdID",[],(function(a,b,c,d,e,f){function a(){var a=arguments,b=a[a.length-1],c=[];return b.sequence([function(c){return b.forEach(b.db.table(9).fetch([[[a[0]]]]),function(b){var c=b.update;b.item;return c({ctmAdId:a[1],ctmAdgroupId:a[2],ctmAdCampaignId:a[3],ctmAdCampaignGroupId:a[4],ctmAdAccountId:a[5]})})},function(a){return b.resolve(c)}])}a.__sproc_name__="LSMailboxUpsertCTMAdIDStoredProcedure";a.__tables__=["threads"];e.exports=a}),null);

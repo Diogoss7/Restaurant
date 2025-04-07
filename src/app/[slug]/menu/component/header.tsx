@@ -20,7 +20,7 @@ const RestaurantHeader = ({ restaurant }: RestaurantHeaderProps) => {
       <Button
         variant="secondary"
         size="icon"
-        className="absolute left-4 top-4 z-50 rounded-full"
+        className="fixed left-4 top-4 z-50 rounded-full"
         onClick={handleBackClick}
       >
         <ChevronLeftIcon />
@@ -34,7 +34,7 @@ const RestaurantHeader = ({ restaurant }: RestaurantHeaderProps) => {
       <Button
         variant="secondary"
         size="icon"
-        className="absolute right-4 top-4 z-50 rounded-full"
+        className="fixed right-4 top-4 z-50 rounded-full"
         onClick={handleOrdersClick}
       >
         <ScrollTextIcon />
